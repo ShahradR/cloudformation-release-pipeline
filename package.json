@@ -1,6 +1,8 @@
 {
-  "name": "test-cdk",
-  "version": "0.1.0",
+  "name": "cloudformation-release-pipeline",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "CDK construct to create an AWS CodePipeline to deploy CloudFormation templates",
   "bin": {
     "test-cdk": "bin/test-cdk.js"
   },
@@ -23,5 +25,11 @@
   "dependencies": {
     "@aws-cdk/core": "1.51.0",
     "source-map-support": "^0.5.16"
-  }
+  },
+  "author": "Shahrad Rezaei <shahrad@rezaei.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ShahradR/cloudformation-release-pipeline/issues"
+  },
+  "homepage": "https://github.com/ShahradR/cloudformation-release-pipeline#readme"
 }
