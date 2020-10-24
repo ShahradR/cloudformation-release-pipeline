@@ -1,0 +1,10 @@
+---
+project:
+  name: cloudformation-release-pipeline
+  regions:
+    - ca-central-1
+  s3_bucket: brokentech-cfn
+
+tests:
+  default:
+    template: ./cdk.out/TestCdkStack.template.json
