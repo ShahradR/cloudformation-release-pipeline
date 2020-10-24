@@ -1,2 +1,6 @@
 # Ignore Vale styles from other repositories
 vale/styles/*
+
+# Ignore the auto-generated tsconfig.json file, which uses comments to show
+# available options
+tsconfig.json
