@@ -72,6 +72,10 @@ describe("the CodePipeline pipeline", () => {
       })
     );
   });
+
+  it.todo("does not pass the SecretToken as a plaintext value");
+
+  it.todo("does not pass the SecretToken value as a Ref to a parameter with a default value");
 });
 
 describe("the CodePipeline webhook", () => {
@@ -90,4 +94,18 @@ describe("the CodePipeline webhook", () => {
       })
     );
   });
+});
+
+describe("the CodePipeline artifact S3 bucket", () => {
+  it.todo("has a bucket policy");
+
+  it.todo("has access logging enabled");
+});
+
+describe("the CodePipeline IAM policy", () => {
+  it.todo("does not allow the * action");
+
+  it.todo("does not allow a * resource with the PassRole action");
+
+  it.todo("does not allow the * resource");
 });
