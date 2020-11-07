@@ -12,8 +12,9 @@ import {
   ArtifactPath,
   CfnPipeline,
 } from "@aws-cdk/aws-codepipeline";
+import { CfnBucket } from "@aws-cdk/aws-s3";
 import { CfnConnection } from "@aws-cdk/aws-codestarconnections";
-import { CfnOutput, Token } from "@aws-cdk/core";
+import { CfnOutput, Fn, Token } from "@aws-cdk/core";
 
 export class ReleasePipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -69,6 +70,13 @@ export class ReleasePipelineStack extends cdk.Stack {
         },
       ],
     });
+
+    const artifactBucket = pipeline.artifactBucket.node
+      .defaultChild as CfnBucket;
+
+    artifactBucket.loggingConfiguration = {
+      destinationBucketName: Fn.importValue("S3ServerAccessLogTarget"),
+    };
 
     const webhook = new CfnWebhook(this, "GitHubWebhook", {
       authentication: "GITHUB_HMAC",

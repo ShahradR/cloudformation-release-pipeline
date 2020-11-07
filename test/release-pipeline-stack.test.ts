@@ -75,7 +75,9 @@ describe("the CodePipeline pipeline", () => {
 
   it.todo("does not pass the SecretToken as a plaintext value");
 
-  it.todo("does not pass the SecretToken value as a Ref to a parameter with a default value");
+  it.todo(
+    "does not pass the SecretToken value as a Ref to a parameter with a default value"
+  );
 });
 
 describe("the CodePipeline webhook", () => {
@@ -99,7 +101,17 @@ describe("the CodePipeline webhook", () => {
 describe("the CodePipeline artifact S3 bucket", () => {
   it.todo("has a bucket policy");
 
-  it.todo("has access logging enabled");
+  it("has access logging enabled", () => {
+    expectCDK(stack).to(
+      haveResourceLike("AWS::S3::Bucket", {
+        LoggingConfiguration: {
+          DestinationBucketName: {
+            "Fn::ImportValue": "S3ServerAccessLogTarget",
+          },
+        },
+      })
+    );
+  });
 });
 
 describe("the CodePipeline IAM policy", () => {
