@@ -5,6 +5,7 @@ import {
   haveResource,
   haveResourceLike,
   haveOutput,
+  stringLike,
 } from "@aws-cdk/assert";
 import * as cdk from "@aws-cdk/core";
 import { ReleasePipelineStack } from "../lib/release-pipeline-stack";
@@ -108,6 +109,9 @@ describe("the CodePipeline artifact S3 bucket", () => {
           DestinationBucketName: {
             "Fn::ImportValue": "S3ServerAccessLogTarget",
           },
+          LogFilePrefix: stringLike(
+            "MyReleasePipelineStackcodepipelineArtifactsBucket*"
+          ),
         },
       })
     );

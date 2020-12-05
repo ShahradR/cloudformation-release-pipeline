@@ -76,6 +76,7 @@ export class ReleasePipelineStack extends cdk.Stack {
 
     artifactBucket.loggingConfiguration = {
       destinationBucketName: Fn.importValue("S3ServerAccessLogTarget"),
+      logFilePrefix: artifactBucket.node.uniqueId,
     };
 
     const webhook = new CfnWebhook(this, "GitHubWebhook", {
