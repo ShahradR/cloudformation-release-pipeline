@@ -43,7 +43,7 @@ export class ReleasePipelineStack extends cdk.Stack {
     const releaseAction = new CloudFormationCreateUpdateStackAction({
       actionName: "ReleaseAction",
       extraInputs: [sourceOutput],
-      adminPermissions: true,
+      adminPermissions: false,
       stackName: "sc-s3-portfolio",
       templatePath: new ArtifactPath(
         sourceOutput,

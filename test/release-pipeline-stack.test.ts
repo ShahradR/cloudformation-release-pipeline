@@ -6,6 +6,8 @@ import {
   haveResourceLike,
   haveOutput,
   stringLike,
+  arrayWith,
+  objectLike,
 } from "@aws-cdk/assert";
 import * as cdk from "@aws-cdk/core";
 import { ReleasePipelineStack } from "../lib/release-pipeline-stack";
@@ -119,7 +121,19 @@ describe("the CodePipeline artifact S3 bucket", () => {
 });
 
 describe("the CodePipeline IAM policy", () => {
-  it.todo("does not allow the * action");
+  it("does not allow the * action", () => {
+    expectCDK(stack).notTo(
+      haveResourceLike("AWS::IAM::Policy", {
+        PolicyDocument: {
+          Statement: arrayWith(
+            objectLike({
+              Action: "*",
+            })
+          ),
+        },
+      })
+    );
+  });
 
   it.todo("does not allow a * resource with the PassRole action");
 
