@@ -76,7 +76,15 @@ describe("the CodePipeline pipeline", () => {
     );
   });
 
-  it.todo("does not pass the SecretToken as a plaintext value");
+  it("does not pass the SecretToken as a plaintext value", () => {
+    expectCDK(stack).notTo(
+      haveResourceLike("AWS::CodePipeline::Webhook", {
+        AuthenticationConfiguration: {
+          SecretToken: stringLike("*"),
+        },
+      })
+    );
+  });
 
   it.todo(
     "does not pass the SecretToken value as a Ref to a parameter with a default value"
