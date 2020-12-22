@@ -14,6 +14,7 @@ import {
 } from "@aws-cdk/aws-codepipeline";
 import { CfnBucket } from "@aws-cdk/aws-s3";
 import { CfnConnection } from "@aws-cdk/aws-codestarconnections";
+import { Secret } from "@aws-cdk/aws-secretsmanager";
 import { CfnOutput, Fn, Token } from "@aws-cdk/core";
 
 export class ReleasePipelineStack extends cdk.Stack {
@@ -79,9 +80,13 @@ export class ReleasePipelineStack extends cdk.Stack {
       logFilePrefix: artifactBucket.node.uniqueId,
     };
 
+    const githubSecretToken = new Secret(this, "GitHubWebhookSecret");
+
     const webhook = new CfnWebhook(this, "GitHubWebhook", {
       authentication: "GITHUB_HMAC",
-      authenticationConfiguration: { secretToken: "test1234" },
+      authenticationConfiguration: {
+        secretToken: githubSecretToken.secretValue.toString(),
+      },
       targetPipeline: Token.asString(pipeline.pipelineName),
       targetAction: sourceAction.actionProperties.actionName,
       targetPipelineVersion: Token.asNumber(pipeline.pipelineVersion),
