@@ -58,7 +58,6 @@ export class ReleasePipelineStack extends cdk.Stack {
     });
 
     const pipeline = new Pipeline(this, "codepipeline", {
-      pipelineName: "codepipeline",
       crossAccountKeys: false,
       stages: [
         {

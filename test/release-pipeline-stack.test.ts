@@ -25,6 +25,14 @@ describe("the CloudFormation stack", () => {
   });
 });
 describe("the CodePipeline pipeline", () => {
+  it("is not named", () => {
+    expectCDK(stack).notTo(
+      haveResourceLike("AWS::CodePipeline::Pipeline", {
+        Name: stringLike("*"),
+      })
+    );
+  });
+
   it("triggers on GitHub deployments", () => {
     expectCDK(stack).to(
       haveResourceLike("AWS::CodePipeline::Webhook", {
