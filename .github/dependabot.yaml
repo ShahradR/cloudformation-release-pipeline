@@ -8,3 +8,11 @@ updates:
     commit-message:
       prefix: fix
       include: scope
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: live
+    commit-message:
+      prefix: fix
+      prefix-development: chore
+      include: scope
