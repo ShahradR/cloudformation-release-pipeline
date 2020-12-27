@@ -16,6 +16,7 @@ import { CfnBucket } from "@aws-cdk/aws-s3";
 import { CfnConnection } from "@aws-cdk/aws-codestarconnections";
 import { Secret } from "@aws-cdk/aws-secretsmanager";
 import { CfnOutput, Fn, Token } from "@aws-cdk/core";
+import { Effect, PolicyStatement } from "@aws-cdk/aws-iam";
 
 export class ReleasePipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -70,6 +71,40 @@ export class ReleasePipelineStack extends cdk.Stack {
         },
       ],
     });
+
+    releaseAction.addToDeploymentRolePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ["cloudformation:CreateStack"],
+        resources: ["*"],
+      })
+    );
+
+    // releaseAction.addToDeploymentRolePolicy(
+    //   new PolicyStatement({
+    //     effect: Effect.DENY,
+    //     actions: ["cloudformation:CreateStack"],
+    //     resources: ["*"],
+    //     conditions: {
+    //       "ForAnyValue:StringLikeIfExists": {
+    //         "cloudformation:ResourceTypes": ["AWS::IAM::*"],
+    //       },
+    //     },
+    //   })
+    // );
+
+    // releaseAction.addToDeploymentRolePolicy(
+    //   new PolicyStatement({
+    //     effect: Effect.DENY,
+    //     actions: ["cloudformation:CreateStack"],
+    //     resources: ["*"],
+    //     conditions: {
+    //       Null: {
+    //         "cloudformation:ResourceTypes": "true",
+    //       },
+    //     },
+    //   })
+    // );
 
     const artifactBucket = pipeline.artifactBucket.node
       .defaultChild as CfnBucket;
